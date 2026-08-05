@@ -9,9 +9,9 @@ namespace ShopSphere_API.Data
         {
         }
 
-        public DbSet<User> users { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Category> categories { get; set; }
-        public DbSet<Product> products { get; set; }
+        public DbSet<Product> Products { get; set; }
         public DbSet<Cart> cart { get; set; }
         public DbSet<CartItem> cartItems { get; set; }
         public DbSet<Order> orders { get; set; }
