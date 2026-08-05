@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using ShopSphere_API.Data;
+using ShopSphere_API.Entities;
 using System.Reflection.Metadata.Ecma335;
 
 [Route("api/[Controller]")]
@@ -8,7 +9,7 @@ using System.Reflection.Metadata.Ecma335;
 
 public class ProductController : ControllerBase
 {
-    private readonly AppContext _context;
+    private readonly AppDbContext _context;
     public ProductController(AppDbContext context)
     {
         _context = context;
@@ -55,6 +56,7 @@ public class ProductController : ControllerBase
             return BadRequest();
 
         _context.Entry(product).State = EntityState.Modified;
+        await _context.SaveChangesAsync();
 
         return Ok(product);
 
