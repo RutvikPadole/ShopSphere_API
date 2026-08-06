@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ShopSphere_API.Data;
 using ShopSphere_API.Entities;
 using System.Reflection.Metadata.Ecma335;
+using Microsoft.AspNetCore.Authorization;
 
 [Route("api/[Controller]")]
 [ApiController]
@@ -14,7 +15,7 @@ public class ProductController : ControllerBase
     {
         _context = context;
     }
-
+    [Authorize]
     [HttpGet]
 
     public async Task<IActionResult> GetProducts()
