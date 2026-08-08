@@ -9,6 +9,6 @@ namespace ShopSphere_API.Entities
         public int Stock {  get; set; }
         public int CategoryId {  get; set; }
         public Category Category { get; set; }
-
+        public string Description { get; internal set; }
     }
 }
