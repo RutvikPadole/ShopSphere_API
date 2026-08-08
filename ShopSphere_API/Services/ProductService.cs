@@ -12,7 +12,7 @@ namespace ShopSphere_API.Services
         }
         public async Task <IEnumerable<ProductDto>> GetAllProducts()
         {
-            var products = await = _repo.GetAllAsync();
+            var products = await _repo.GetAllAsync();
             return products.Select(p => new ProductDto
             {
                 Id = p.Id,
