@@ -4,6 +4,7 @@ using ShopSphere_API.Data;
 using ShopSphere_API.Entities;
 using System.Reflection.Metadata.Ecma335;
 using Microsoft.AspNetCore.Authorization;
+using ShopSphere_API.DTOs;
 
 [Route("api/[Controller]")]
 [ApiController]
@@ -40,13 +41,20 @@ public class ProductController : ControllerBase
 
     [HttpPost]
 
-    public async Task<IActionResult> CreateProducts(Product product)
+    public async Task<IActionResult> CreateProducts(CreateProductDto dto)
     {
+        var product = new Product
+        {
+            Name = dto.Name,
+            Price = dto.Price,
+            Description = dto.Description,
+            CategoryId = dto.CategoryId
+        };
+
         _context.Products.Add(product);
         await _context.SaveChangesAsync();
 
         return Ok(product);
-
     }
 
     [HttpPut("{id}")]
