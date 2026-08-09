@@ -20,5 +20,19 @@ namespace ShopSphere_API.Services
                 Price = p.Price,
             });
         }
+
+        public async Task <ProductDto> GetProductById(int id)
+        {
+            var products = await _repo.GetByIdAsync(id);
+
+            if (id == null) return null;
+
+            return products.Select(p => new ProductDto
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Price = p.Price
+            });
+        }
     }
 }
