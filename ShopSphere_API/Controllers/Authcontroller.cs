@@ -24,9 +24,11 @@ namespace ShopSphere_API.Controllers
         
         public IActionResult Register(User user)
         {
-            _context.Users.Add (user);
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+
+                _context.Users.Add (user);
             _context.SaveChanges();
-            return Ok("User Registered");
+            return Ok("User Registred");
         }
 
         [HttpPost ("Login")]
@@ -34,9 +36,14 @@ namespace ShopSphere_API.Controllers
         public IActionResult Login (User loginUser)
         {
             var user = _context.Users
-                .FirstOrDefault(X => X.Email == loginUser.Email && X. Password == loginUser.Password);
+                .FirstOrDefault(X => X.Email == loginUser.Email);
 
             if (user == null)
+                return Unauthorized();
+
+            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(loginUser.Password, user.Password);
+
+            if(!isPasswordValid)
                 return Unauthorized();
 
             var token = GenerateToken(user);
