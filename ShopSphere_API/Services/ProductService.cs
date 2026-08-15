@@ -10,7 +10,7 @@ namespace ShopSphere_API.Services
         {
             _repo = repo;
         }
-        public async Task <IEnumerable<ProductDto>> GetAllProducts()
+        public async Task<IEnumerable<ProductDto>> GetAllProducts()
         {
             var products = await _repo.GetAllAsync();
             return products.Select(p => new ProductDto
@@ -21,18 +21,35 @@ namespace ShopSphere_API.Services
             });
         }
 
-        public async Task <ProductDto> GetProductById(int id)
+        public async Task<ProductDto> GetProductById(int id)
         {
-            var products = await _repo.GetByIdAsync(id);
+            var p = await _repo.GetByIdAsync(id);
 
-            if (id == null) return null;
+            if (p == null) return null;
 
-            return products.Select(p => new ProductDto
+            return new ProductDto
             {
                 Id = p.Id,
                 Name = p.Name,
                 Price = p.Price
-            });
+            };
+
+        }
+      
+
+        public async Task CreateProduc(CreateProductDto dto)
+        {
+            var product = new Product
+            {
+                Name = dto.Name,
+                Price = dto.Price,
+                Description = dto.Description,
+                CAtegoryId = dto.CategoryId
+            };
+
+            await _repo.AddAsync(Product);
+            await _repo.SaveAsync();
+
         }
     }
 }
