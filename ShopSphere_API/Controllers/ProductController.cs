@@ -5,23 +5,24 @@ using ShopSphere_API.Entities;
 using System.Reflection.Metadata.Ecma335;
 using Microsoft.AspNetCore.Authorization;
 using ShopSphere_API.DTOs;
+using ShopSphere_API.Interfaces;
 
 [Route("api/[Controller]")]
 [ApiController]
 
 public class ProductController : ControllerBase
 {
-    private readonly AppDbContext _context;
-    public ProductController(AppDbContext context)
+    private readonly IProductService _service;
+    public ProductController(IProductService service)
     {
-        _context = context;
+        _service = service;
     }
     [Authorize]
     [HttpGet]
 
     public async Task<IActionResult> GetProducts()
     {
-        var products = await _context.Products.ToListAsync();
+        var products = await _service.GetAllProducts();
 
         return Ok(products);
     }
@@ -30,7 +31,7 @@ public class ProductController : ControllerBase
 
     public async Task <IActionResult> GetProduct (int id)
     {
-        var products = await _context.Products.FindAsync(id);
+        var products = await _service.GetProductById(id);
 
         if (products == null)
             return NotFound();
@@ -51,10 +52,9 @@ public class ProductController : ControllerBase
             CategoryId = dto.CategoryId
         };
 
-        _context.Products.Add(product);
-        await _context.SaveChangesAsync();
+        await _service.CreateProduct(dto);
 
-        return Ok(product);
+        return Ok("Created");
     }
 
     [HttpPut("{id}")]
@@ -64,8 +64,8 @@ public class ProductController : ControllerBase
         if (id != product.Id)
             return BadRequest();
 
-        _context.Entry(product).State = EntityState.Modified;
-        await _context.SaveChangesAsync();
+        _service.Entry(product).State = EntityState.Modified;
+        await _service.SaveChangesAsync();
 
         return Ok(product);
 
