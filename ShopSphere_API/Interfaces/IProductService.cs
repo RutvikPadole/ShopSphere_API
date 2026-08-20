@@ -7,7 +7,5 @@ namespace ShopSphere_API.Interfaces
         Task<IEnumerable<ProductDto>> GetAllProducts();
         Task<ProductDto> GetProductById(int id);
         Task CreateProduct(CreateProductDto dto);
-
-
     }
 }
