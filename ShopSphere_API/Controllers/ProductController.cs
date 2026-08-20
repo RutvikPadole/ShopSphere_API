@@ -17,6 +17,7 @@ public class ProductController : ControllerBase
     {
         _service = service;
     }
+
     [Authorize]
     [HttpGet]
 
