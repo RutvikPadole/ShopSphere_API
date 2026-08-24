@@ -6,9 +6,12 @@ using ShopSphere_API.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using ShopSphere_API.DTOs;
 
 namespace ShopSphere_API.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class Authcontroller : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -21,14 +24,20 @@ namespace ShopSphere_API.Controllers
         }
 
         [HttpPost ("Register")]
-        
-        public IActionResult Register(User user)
+        public async Task<IActionResult> Register(RegisterDto dto)
         {
-            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+            var user = new User
+            {
+                Name = dto.Name,
+                Email = dto.Email,
+                Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
+                Role = "User"
+            };
 
-                _context.Users.Add (user);
-            _context.SaveChanges();
-            return Ok("User Registred");
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            return Ok("User Registered");
         }
 
         [HttpPost ("Login")]
