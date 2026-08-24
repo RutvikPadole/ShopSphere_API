@@ -1,89 +1,71 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ShopSphere_API.Data;
-using ShopSphere_API.Entities;
-using System.Reflection.Metadata.Ecma335;
-using Microsoft.AspNetCore.Authorization;
 using ShopSphere_API.DTOs;
 using ShopSphere_API.Interfaces;
 
-[Route("api/[Controller]")]
-[ApiController]
-
-public class ProductController : ControllerBase
+namespace ShopSphere_API.Controllers
 {
-    private readonly IProductService _service;
-    public ProductController(IProductService service)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ProductController : ControllerBase
     {
-        _service = service;
-    }
+        private readonly IProductService _service;
 
-    [Authorize]
-    [HttpGet]
-
-    public async Task<IActionResult> GetProducts()
-    {
-        var products = await _service.GetAllProducts();
-
-        return Ok(products);
-    }
-
-    [HttpGet("{id}")]
-
-    public async Task <IActionResult> GetProduct (int id)
-    {
-        var products = await _service.GetProductById(id);
-
-        if (products == null)
-            return NotFound();
-
-        return Ok(products);
-
-    }
-
-    [HttpPost]
-
-    public async Task<IActionResult> CreateProducts(CreateProductDto dto)
-    {
-        var product = new Product
+        public ProductController(IProductService service)
         {
-            Name = dto.Name,
-            Price = dto.Price,
-            Description = dto.Description,
-            CategoryId = dto.CategoryId
-        };
+            _service = service;
+        }
 
-        await _service.CreateProduct(dto);
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> GetProducts()
+        {
+            var products = await _service.GetAllProducts();
 
-        return Ok("Created");
-    }
+            return Ok(products);
+        }
 
-    [HttpPut("{id}")]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetProduct(int id)
+        {
+            var product = await _service.GetProductById(id);
 
-    public async Task<IActionResult> UpdateProduct(int id, Product product)
-    {
-        if (id != product.Id)
-            return BadRequest();
+            if (product == null)
+                return NotFound();
 
-        _service.Entry(product).State = EntityState.Modified;
-        await _service.SaveChangesAsync();
+            return Ok(product);
+        }
 
-        return Ok(product);
+        [HttpPost]
+        public async Task<IActionResult> CreateProduct(CreateProductDto dto)
+        {
+            await _service.CreateProduct(dto);
 
-    }
+            return Ok("Created");
+        }
 
-    [HttpDelete("{id}")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateProduct(
+            int id,
+            CreateProductDto dto)
+        {
+            var result = await _service.UpdateProduct(id, dto);
 
-    public async Task<IActionResult> DeleteProduct(int id)
-    {
-        var product = await _context.Products.FindAsync(id);
+            if (!result)
+                return NotFound();
 
-        if (product == null)
-            return NotFound();
+            return Ok("Product updated successfully");
+        }
 
-        _context.Products.Remove(product);
-        await _context.SaveChangesAsync();
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProduct(int id)
+        {
+            var result = await _service.DeleteProduct(id);
 
-        return Ok("Deleted Successfully");
+            if (!result)
+                return NotFound();
+
+            return Ok("Product deleted successfully");
+        }
     }
 }
