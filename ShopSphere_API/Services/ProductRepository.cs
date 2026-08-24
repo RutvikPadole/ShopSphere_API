@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopSphere_API.Data;
-using ShopSphere_API.Interfaces;
 using ShopSphere_API.Entities;
+using ShopSphere_API.Interfaces;
 
-namespace ShopSphere_API.Services
+namespace ShopSphere_API.Repositories
 {
     public class ProductRepository : IProductRepository
     {
@@ -19,26 +19,29 @@ namespace ShopSphere_API.Services
             return await _context.Products.ToListAsync();
         }
 
-        public async Task <Product> GetByIDAsync(int id)
+        public async Task<Product?> GetByIdAsync(int id)
         {
             return await _context.Products.FindAsync(id);
         }
 
-        public async Task AddAsync (Product product)
+        public async Task AddAsync(Product product)
         {
-             await _context.Products.AddAsync(product);
+            await _context.Products.AddAsync(product);
         }
 
-        public async Task DeleteAsync(Product product)
+        public void Update(Product product)
         {
-            return await _context.Products.RemoveAsync(product);
+            _context.Products.Update(product);
+        }
+
+        public void Delete(Product product)
+        {
+            _context.Products.Remove(product);
         }
 
         public async Task SaveAsync()
         {
-            return await _context.Products.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
     }
-
-
 }
