@@ -43,6 +43,7 @@ namespace ShopSphere_API.Controllers
         [HttpPost ("Login")]
 
         public IActionResult Login (User loginUser)
+
         {
             var user = _context.Users
                 .FirstOrDefault(X => X.Email == loginUser.Email);
@@ -60,6 +61,7 @@ namespace ShopSphere_API.Controllers
         }
 
         private string GenerateToken (User user)
+
         {
             var claims = new[]
             {
