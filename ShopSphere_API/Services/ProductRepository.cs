@@ -10,6 +10,7 @@ namespace ShopSphere_API.Repositories
         private readonly AppDbContext _context;
 
         public ProductRepository(AppDbContext context)
+
         {
             _context = context;
         }
