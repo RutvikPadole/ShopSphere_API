@@ -66,12 +66,12 @@ namespace ShopSphere_API.Controllers
                 new Claim(ClaimTypes.Name, user.Email)
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Key"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var creds = new SigningCredentials(key,SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
 
-                issuer: _config["Jwt:Isuuer"],
+                issuer: _config["Jwt:Issuer"],
                 audience: _config["Jwt:Audience"],
                 claims: claims,
                 expires: DateTime.Now.AddHours(1),
