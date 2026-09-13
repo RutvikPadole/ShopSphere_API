@@ -1,13 +1,14 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using ShopSphere_API.Data;
+using ShopSphere_API.Interfaces;
+using ShopSphere_API.Mapping;
+using ShopSphere_API.Repositories;
+using ShopSphere_API.Services;
 using System.Security.Cryptography;
 using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using ShopSphere_API.Interfaces;
-using ShopSphere_API.Services;
-using ShopSphere_API.Repositories;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,7 @@ Options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 builder.Services.AddScoped<IProductRepository,ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddAutoMapper(typeof(ProductProfile));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(Options =>
