@@ -1,4 +1,5 @@
-﻿using ShopSphere_API.DTOs;
+﻿using AutoMapper;
+using ShopSphere_API.DTOs;
 using ShopSphere_API.Entities;
 using ShopSphere_API.Interfaces;
 
@@ -7,10 +8,12 @@ namespace ShopSphere_API.Services
     public class ProductService : IProductService
     {
         private readonly IProductRepository _repo;
+        private readonly IMapper _mapper;
 
-        public ProductService(IProductRepository repo)
+        public ProductService(IProductRepository repo, IMapper mapper)
         {
             _repo = repo;
+           _mapper = mapper;
         }
 
         public async Task<IEnumerable<ProductDto>> GetAllProducts()
