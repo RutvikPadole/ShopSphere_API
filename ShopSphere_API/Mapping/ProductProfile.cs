@@ -1,4 +1,4 @@
-﻿
+﻿using AutoMapper;
 using ShopSphere_API.DTOs;
 using ShopSphere_API.Entities;
 
