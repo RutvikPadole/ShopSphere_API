@@ -35,14 +35,8 @@ namespace ShopSphere_API.Services
 
         public async Task CreateProduct(CreateProductDto dto)
         {
-            var product = new Product
-            {
-                Name = dto.Name,
-                Price = dto.Price,
-                Description = dto.Description,
-                CategoryId = dto.CategoryId
-            };
-
+            var product = _mapper.Map<Product>(dto);
+            
             await _repo.AddAsync(product);
 
             await _repo.SaveAsync();
