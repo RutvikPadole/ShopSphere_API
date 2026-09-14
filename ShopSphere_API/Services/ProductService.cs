@@ -30,12 +30,7 @@ namespace ShopSphere_API.Services
             if (product == null)
                 return null;
 
-            return new ProductDto
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Price = product.Price
-            };
+          return _mapper.Map<ProductDto>(product);
         }
 
         public async Task CreateProduct(CreateProductDto dto)
