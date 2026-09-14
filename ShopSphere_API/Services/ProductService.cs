@@ -42,9 +42,7 @@ namespace ShopSphere_API.Services
             await _repo.SaveAsync();
         }
 
-        public async Task<bool> UpdateProduct(
-            int id,
-            CreateProductDto dto)
+        public async Task<bool> UpdateProduct( int id,CreateProductDto dto)
         {
             var product = await _repo.GetByIdAsync(id);
 
