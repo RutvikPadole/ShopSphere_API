@@ -48,12 +48,7 @@ namespace ShopSphere_API.Services
 
             if (product == null)
                 return false;
-
-            product.Name = dto.Name;
-            product.Price = dto.Price;
-            product.Description = dto.Description;
-            product.CategoryId = dto.CategoryId;
-
+            _mapper.Map(dto, product);
             _repo.Update(product);
 
             await _repo.SaveAsync();
