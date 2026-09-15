@@ -40,23 +40,26 @@ namespace ShopSphere_API.Controllers
             return Ok("User Registered");
         }
 
-        [HttpPost ("Login")]
+        [HttpPost("Login")]
 
-        public IActionResult Login (User loginUser)
+        public async Task<IActionResult> Login(LoginDto dto)
         {
             var user = _context.Users
-                .FirstOrDefault(X => X.Email == loginUser.Email);
+                .FirstOrDefault(X => X.Email == dto.Email);
 
             if (user == null)
-                return Unauthorized();
+                return Unauthorized("Invalid email or password");
 
-            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(loginUser.Password, user.Password);
+            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(dto.Password, user.Password);
 
-            if(!isPasswordValid)
-                return Unauthorized();
+            if (!isPasswordValid)
+                return Unauthorized("Invanild email or password");
 
             var token = GenerateToken(user);
-            return Ok(token);
+             return Ok(new
+            {
+                token = token
+            });
         }
 
         private string GenerateToken (User user)
