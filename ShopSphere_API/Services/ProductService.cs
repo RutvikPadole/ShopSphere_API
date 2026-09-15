@@ -48,7 +48,9 @@ namespace ShopSphere_API.Services
 
             if (product == null)
                 return false;
+
             _mapper.Map(dto, product);
+
             _repo.Update(product);
 
             await _repo.SaveAsync();
