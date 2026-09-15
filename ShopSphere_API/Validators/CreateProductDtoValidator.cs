@@ -12,8 +12,16 @@ namespace ShopSphere_API.Validators
                 .WithMessage("Product name is required");
 
             RuleFor(x => x.Price)
-                .NotEmpty
-                .with
+                .NotEmpty()
+                .WithMessage("Price must be greater than 0");
+
+            RuleFor(x => x.Description)
+                .NotEmpty()
+                .WithMessage("Description is required");
+
+            RuleFor(x => x.CategoryId)
+                .NotEmpty()
+                .WithMessage("CategoryId must be greater than 0");
         }
 
     }
