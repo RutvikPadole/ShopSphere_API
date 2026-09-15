@@ -56,6 +56,7 @@ namespace ShopSphere_API.Controllers
                 return Unauthorized("Invanild email or password");
 
             var token = GenerateToken(user);
+
              return Ok(new
             {
                 token = token
