@@ -11,6 +11,7 @@ using ShopSphere_API.Repositories;
 using ShopSphere_API.Services;
 using System.Security.Cryptography;
 using System.Text;
+using FluentValidation.AspNetCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,7 +45,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 
-builder.Services.AddControllers();
+builder.Services
+    .AddControllers()
+    .AddFluentValidation();
 
 builder.Services.AddEndpointsApiExplorer();
 
