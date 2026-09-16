@@ -45,9 +45,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 
-builder.Services
-    .AddControllers()
-    .AddFluentValidation();
+builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 
