@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShopSphere_API.DTOs;
 using ShopSphere_API.Interfaces;
@@ -11,9 +12,10 @@ namespace ShopSphere_API.Controllers
     {
         private readonly IProductService _service;
 
-        public ProductController(IProductService service)
+        public ProductController(IProductService service, IValidator<CreateProductDto> validator)
         {
             _service = service;
+
         }
 
         [Authorize]
