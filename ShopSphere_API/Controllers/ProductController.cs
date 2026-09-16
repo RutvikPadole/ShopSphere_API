@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShopSphere_API.DTOs;
 using ShopSphere_API.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace ShopSphere_API.Controllers
 {
@@ -11,10 +12,12 @@ namespace ShopSphere_API.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService _service;
+        private readonly IValidator<CreateProductDto> _validator;
 
         public ProductController(IProductService service, IValidator<CreateProductDto> validator)
         {
             _service = service;
+            _validator = validator;
 
         }
 
@@ -41,6 +44,13 @@ namespace ShopSphere_API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateProduct(CreateProductDto dto)
         {
+            var ValidatorResult = await _validator.ValidateAsync(dto);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
+
             await _service.CreateProduct(dto);
 
             return Ok("Created");
