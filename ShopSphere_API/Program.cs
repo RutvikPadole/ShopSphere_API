@@ -26,6 +26,7 @@ builder.Services.AddScoped<IProductRepository,ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
 
 builder.Services.AddAutoMapper(typeof(ProductProfile));
+
 builder.Services.AddValidatorsFromAssemblyContaining<CreateProductDtoValidator>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
