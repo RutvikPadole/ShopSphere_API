@@ -10,7 +10,6 @@ namespace ShopSphere_API.Middleware
         {
             _next = next;
         }
-
         public async Task InvokeAsync(HttpContext context)
         {
 
