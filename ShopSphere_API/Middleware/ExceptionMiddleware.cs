@@ -8,7 +8,7 @@ namespace ShopSphere_API.Middleware
 
         public ExceptionMiddleware(RequestDelegate next)
         {
-
+            _next = next;
         }
     }
 }
