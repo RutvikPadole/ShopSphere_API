@@ -24,6 +24,7 @@ Options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 builder.Services.AddScoped<IProductRepository,ProductRepository>();
 
 builder.Services.AddScoped<IProductService, ProductService>();
+
 builder.Services.AddAutoMapper(typeof(ProductProfile));
 builder.Services.AddValidatorsFromAssemblyContaining<CreateProductDtoValidator>();
 
