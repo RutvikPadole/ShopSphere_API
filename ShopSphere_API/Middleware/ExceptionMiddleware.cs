@@ -12,6 +12,9 @@ namespace ShopSphere_API.Middleware
         }
 
         public async Task InvokeAsync(HttpContext context)
+        {
+
+        }
     }
 }
 
