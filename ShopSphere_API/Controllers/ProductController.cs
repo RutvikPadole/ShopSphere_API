@@ -44,7 +44,7 @@ namespace ShopSphere_API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateProduct(CreateProductDto dto)
         {
-            var ValidatorResult = await _validator.ValidateAsync(dto);
+            var validationResult = await _validator.ValidateAsync(dto);
 
             if (!validationResult.IsValid)
             {
