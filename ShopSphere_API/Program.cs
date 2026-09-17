@@ -22,6 +22,7 @@ builder.Services.AddDbContext<AppDbContext>(Options =>
 Options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IProductRepository,ProductRepository>();
+
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddAutoMapper(typeof(ProductProfile));
 builder.Services.AddValidatorsFromAssemblyContaining<CreateProductDtoValidator>();
