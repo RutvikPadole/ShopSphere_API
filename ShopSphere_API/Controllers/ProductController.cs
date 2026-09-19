@@ -67,6 +67,7 @@ namespace ShopSphere_API.Controllers
                 return NotFound();
 
             return Ok("Product updated successfully");
+
         }
 
         [HttpDelete("{id}")]
