@@ -81,6 +81,7 @@ namespace ShopSphere_API.Controllers
                 claims: claims,
                 expires: DateTime.Now.AddHours(1),
                  signingCredentials: creds
+
                 );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
