@@ -60,6 +60,7 @@ namespace ShopSphere_API.Controllers
              return Ok(new
             {
                 token = token
+
             });
         }
 
