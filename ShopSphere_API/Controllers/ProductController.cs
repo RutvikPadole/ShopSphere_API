@@ -54,6 +54,7 @@ namespace ShopSphere_API.Controllers
             await _service.CreateProduct(dto);
 
             return Ok("Created");
+
         }
 
         [HttpPut("{id}")]
